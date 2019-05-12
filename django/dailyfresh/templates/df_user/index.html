@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <p>《霏霏》<br></p>
+    <p>云湿丝柳忆廉颇，<br>笑电霜滑自有天。<br>半雨江上怜锦碎，<br>梁尘落屑正乏贤。</p>
+    <p>格式化当前时间：{{ now|date:'Y年m月d日 H:i:s' }}</p>
+    <p>当前时间：{{ now }}</p>
+    <p>列表：{{ L }}</p>
+    <p>列表的第一个值：{{ L|first }}</p>
+    <p>列表的第一个值add{{ num }}：{{ L.0|add:num }}</p>
+    <p>字典：{{ D }}</p>
+    <p>字典error：{{ D.0|default:'菲菲计算错误'}}</p>
+    <p>函数返回值：{{ func }}</p>
+</body>
+</html>

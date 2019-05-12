@@ -1,5 +1,6 @@
 #coding=utf-8
 from _sha1 import sha1
+from datetime import datetime
 from django.http import JsonResponse
 from .models import *
 from django.shortcuts import render, redirect,reverse
@@ -53,3 +54,23 @@ def test1(request):
 
 def test(request):
     return HttpResponse("<p>《霏霏》<br>云湿丝柳忆廉颇，<br>笑电霜滑自有天。<br>半雨江上怜锦碎，<br>梁尘落屑正乏贤。<br><p>")
+
+def index(request):
+    now = datetime.now()
+    now1 = now.strftime('%Y{y}%m{m}%d{d}').format(y='年',m='月',d='日')
+    L = [6,5,4]
+    D = {'name':"菲菲",'age':18,'height':150}
+    num = '8'
+    def func():
+        return '菜徐坤'
+    return render(request,'df_user/index.html',context={
+        'now':now,
+        'now1':now1,
+        'L':L,
+        'D':D,
+        'func':func,
+        'num':num,
+    })
+
+def login01(request):
+    return render(request,'df_user/login01.html')
