@@ -11,5 +11,6 @@ urlpatterns =[
     path(r'test/',views.test,name="test"),
     path(r'index/',views.index,),
     path(r'login01/',views.login01),
+    path(r'details/<name>',views.details,name='details'),
 
 ]

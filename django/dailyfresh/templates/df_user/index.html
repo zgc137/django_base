@@ -1,12 +1,17 @@
+{% extends 'df_user/base.html' %}
+{% load customer_fileters %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
-</head>
+{% block content %}
 <body>
+    <table  width="200" border="1" style="border:1px solid #000000;">
+        <thead><tr><th>序号</th><th>姓名</th><th>年龄</th><th>性别</th></tr></thead>
+        <tbody>
+            {% for i in sts %}
+                <tr {% if i.sex == 'man' %} style="color: #42ad46"{% endif %}><td><a href="{% url 'df_user:details' i.name%}">{{ forloop.counter }}</a></td><td>{{ i.name }}</td><td>{{ i.age }}</td><td>{{ i.sex|to_sex }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <p>《霏霏》<br></p>
     <p>云湿丝柳忆廉颇，<br>笑电霜滑自有天。<br>半雨江上怜锦碎，<br>梁尘落屑正乏贤。</p>
     <p>格式化当前时间：{{ now|date:'Y年m月d日 H:i:s' }}</p>
@@ -17,5 +22,7 @@
     <p>字典：{{ D }}</p>
     <p>字典error：{{ D.0|default:'菲菲计算错误'}}</p>
     <p>函数返回值：{{ func }}</p>
-</body>
-</html>
+    <div style="position: fixed;width: auto;height: auto;right: 0;bottom:0;">
+        {% include 'df_user/ad.html' %}
+    </div>
+{% endblock %}

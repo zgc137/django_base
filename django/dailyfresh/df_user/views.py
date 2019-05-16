@@ -61,6 +61,11 @@ def index(request):
     L = [6,5,4]
     D = {'name':"菲菲",'age':18,'height':150}
     num = '8'
+    sts = [
+        {'name':'alex','age':18,'sex': 1},
+        {'name':'菲菲','age':12,'sex': 0},
+        {'name':'jack','age':28,'sex': 1},
+    ]
     def func():
         return '菜徐坤'
     return render(request,'df_user/index.html',context={
@@ -70,7 +75,11 @@ def index(request):
         'D':D,
         'func':func,
         'num':num,
+        'sts':sts,
     })
 
 def login01(request):
     return render(request,'df_user/login01.html')
+
+def details(request,name):
+    return HttpResponse('This is student {} detail page'.format(name))
