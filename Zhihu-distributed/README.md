@@ -1,2 +1,0 @@
-# Zhihu
-Zhihu User Spider

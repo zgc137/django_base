@@ -5,9 +5,8 @@ from django.http import JsonResponse
 from .models import *
 from django.shortcuts import render, redirect,reverse
 from django.http import HttpResponse
+from df_user.models import Student
 # Create your views here.
-
-
 
 def register(request):
     return render(request,'df_user/register.html')
@@ -40,7 +39,6 @@ def register_handle(request):
     #register success redirect login.html
     return redirect('/user/login/')
 
-
 def register_exist(request):
     uname = request.GET.get('uname')
     count = UserInfo.objects.filter(uname=uname).count()
@@ -64,11 +62,12 @@ def index(request):
     L = [6,5,4]
     D = {'name':"菲菲",'age':18,'height':150}
     num = '8'
-    sts = [
-        {'name':'alex','age':18,'sex': 1,'course': ['Python','c']},
-        {'name':'菲菲','age':12,'sex': 0,'course': ['Python','java']},
-        {'name':'jack','age':28,'sex': 1,'course': ['Python','撩妹']}
-    ]
+    sts = Student.objects.all()
+    # sts = [
+    #     {'name':'alex','age':18,'sex': 1,'course': ['Python','c']},
+    #     {'name':'菲菲','age':12,'sex': 0,'course': ['Python','java']},
+    #     {'name':'jack','age':28,'sex': 1,'course': ['Python','撩妹']}
+    # ]
     def func():
         return '菜徐坤'
     return render(request,'df_user/index.html',context={
