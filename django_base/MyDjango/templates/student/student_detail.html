@@ -1,0 +1,73 @@
+{% extends 'student/base.html' %}
+{% block title %} 学生详情 {% endblock %}
+{% block section %}{{ section }}{% endblock %}
+{% block content %}
+    <form class="form-horizontal" method="post">
+    {% csrf_token %}
+      <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">姓名</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="name" placeholder="请输入姓名" name="name" value='{{ student.name }}'>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="age" class="col-sm-2 control-label">年龄</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="age" placeholder="请输入年龄" name="age" value="{{ student.age }}">
+        </div>
+      </div>
+      <div class="form-group">
+           <label for="age" class="col-sm-2 control-label">性别</label>
+        <div class="col-sm-3">
+             <label class="radio-inline">
+              <input type="radio" name="sex" id="inlineRadio2" value=0 {% if student.sex == 0 %}checked{% endif %}>女
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="sex" id="inlineRadio3" value=1 {% if student.sex != 0 %}checked{% endif %}>男
+            </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="qq" class="col-sm-2 control-label">QQ</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="age" placeholder="请输入QQ" name="qq" value="{{ student.qq }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone" class="col-sm-2 control-label">电话</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="phone" placeholder="请输入电话" name="phone" value="{{ student.phone }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone" class="col-sm-2 control-label">年级</label>
+        <div class="col-sm-3">
+             <select class="form-control">
+                 <option>未填写</option>
+                 {% for grade in grades %}
+                    <option value="{{ grade.id }}"{% if grade.id == student.grade.id %}selected{% endif %}>{{ grade }}</option>
+                 {% endfor %}
+
+            </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="num" class="col-sm-2 control-label">身份证</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="num" placeholder="请输入身份证" name="num">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="college" class="col-sm-2 control-label">毕业学校</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" id="college" placeholder="请输入毕业学校" name="college">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">保存</button>
+          <button type="reset" class="btn btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
+{% endblock %}
