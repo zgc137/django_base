@@ -24,13 +24,15 @@ class StudentDetail(models.Model):
     num = models.CharField('身份证',max_length=40,unique=True)
     college= models.CharField('毕业学校',max_length=20,default='')
     student = models.OneToOneField('Student',on_delete=models.CASCADE,related_name='detail')
+    def __str__(self):
+        return "{}".format(self.student.name)
 
 class Grade(models.Model):
     name = models.CharField('班级名称',max_length=20)
     num = models.CharField('班期',max_length=20)
 
     def __str__(self):
-        return "{}-{}".format(self.name,self.num)
+        return "{}".format(self.name,self.num)
 
 class Course(models.Model):
     name =models.CharField('课程名称',max_length=20)

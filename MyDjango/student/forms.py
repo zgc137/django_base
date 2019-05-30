@@ -26,7 +26,8 @@ class StudentDetailForm(forms.ModelForm):
     def clean_num(self):
         data = self.cleaned_data.get('num')
         if not data[:-1].isdigit():
-            self.add_error('num','你输入的身份证号码错误')
+            # self.add_error('num','你输入的身份证号码错误')
+            raise forms.ValidationError('==你输入的身份证号码错误=====')
 
-
+        return data
 

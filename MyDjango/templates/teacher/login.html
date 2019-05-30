@@ -3,6 +3,7 @@
 {% block link %}<link href="{% static 'teacher/css/login.css' %}" rel="stylesheet">{% endblock %}
 {% block content %}
     <div class="container">
+
         <form action="" method="POST" >
             {% csrf_token %}
             <p>用户名：<input type="text" name="user"></p>

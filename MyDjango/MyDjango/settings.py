@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+from django.urls import reverse,reverse_lazy
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'teacher.middleware.simple_middleware',
+    'teacher.middleware.SimpleMiddleWare',
 ]
 
 ROOT_URLCONF = 'MyDjango.urls'
@@ -64,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'teacher.curstomer_context_processor.my_name',#全路径配置
             ],
             'libraries':{
                 'student_customer_filter':"student.templatetags.student_customer_filter"
@@ -142,3 +145,4 @@ STATICFILES_DIRS = [
 # MEDIA_ROOT = os.path.join(BASE_DIR,'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
+LOGIN_URL = reverse_lazy('teacher:login') #app加载完成后才执行

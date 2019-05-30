@@ -7,6 +7,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from MyDjango.settings import MEDIA_ROOT
 from  teacher.form import RegisterForm
+from django.contrib.auth import authenticate,login,logout
+from  django.contrib.auth.decorators import login_required,permission_required
 # Create your views here.
 def detail(request,year,month,day,id):
     return HttpResponse("{}年{}月{}日学生ID为{}的详情".format(year,month,day,id))
@@ -54,34 +56,66 @@ def test(request):
     #     'format_str':format_str,
     # })
 
-def login01(request):
+def login_view(request):
+    next_url = request.GET.get('next')
+    # user = request.user #已登陆显示登陆用户，否则显示游客
+    #判断是否登陆
+    if request.user.is_authenticated:#匿名用户返回false
+        if next_url:
+            return redirect(next_url)
+        return redirect(reverse('teacher:index'))
+    # return render(request, 'teacher/login01.html')
 
-    return render(request, 'teacher/login01.html')
+    if request.method == 'POST':
+        username = request.POST['user']
+        password = request.POST.get('pwd')
+        user = authenticate(username=username,password=password)
+        if user is not None:
+            #登陆，将用户信息保存到session中
+            login(request,user)
+            if next_url:
+                return redirect(next_url)
+            return redirect(reverse('teacher:index'))
+    return render(request,'teacher/login.html')
 
 def index(request):
     name = request.session.get('name','游客')
     return  render(request,'teacher/new_index.html',context={'name':name})
 
-def login(request):
+# def login02(request):
+#
+#     if request.method == 'POST':
+#         username = request.POST['user']
+#         password = request.POST.get('pwd')
+#         if username == 'jack' and password =='123':
+#             request.session['name'] = username
+#             request.session.set_expiry(10)
+#             return redirect(reverse('teacher:index'))
+#
+#     return  render(request, 'teacher/login.html')
 
-    if request.method == 'POST':
-        username = request.POST['user']
-        password = request.POST.get('pwd')
-        if username == 'jack' and password =='123':
-            request.session['name'] = username
-            request.session.set_expiry(10)
-            return redirect(reverse('teacher:index'))
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('teacher:index'))
 
-    return  render(request, 'teacher/login.html')
+# def logout01(request):
+#     request.session.flush()
+#     return  redirect(reverse('teacher:index'))
 
-def logout(request):
-    request.session.flush()
-    return  redirect(reverse('teacher:index'))
+
 
 def details(request,name):
     return HttpResponse('This is student {} detail page'.format(name))
 
+@permission_required('teacher.view_student',raise_exception=True)
+@login_required  #默认未登录时跳转到accoounts/login
 def upload(request):
+    # if not request.user.is_authenticated:#未登录用户验证 限制登陆
+    #     return redirect(reverse('teacher:login')+'?next={}'.format(request.path_info))#把当前路径做参数传递
+
+    # if request.user.has_perm('teacher.view_student'):
+    #     return HttpResponse('无权限查看')
+
     if request.method =='POST':
         # file = request.FILES.get('file')#upload a  file
         files = request.FILES.getlist('file')  #upload a many file
