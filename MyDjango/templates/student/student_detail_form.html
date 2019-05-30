@@ -1,0 +1,47 @@
+{% extends 'student/base.html' %}
+{% load student_customer_tags %}
+{% load static %}
+{% block title %} 学生详情 {% endblock %}
+{% block section %}{{ section }}{% endblock %}
+{% block link %}
+<link rel="stylesheet" href="{% static 'student/css/detail.css' %}">
+{% endblock %}
+{% block content %}
+    <form class="form-horizontal" method="post">
+    {% csrf_token %}
+
+        {% for field in form %}
+         <div class="form-group {% if field.errors %}has-error{% endif %}">
+            {% for error in field.errors %}
+                <label for="{{ field.id_for_label }}" class="control-label">{{ error }}</label>
+            {% endfor %}
+              <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label }}</label>
+              <div class ="col-sm-2">
+                  {% if field.label == '性别' %}
+                  {{ field }}
+                  {% else %}
+                  {% add_class field 'form-control' %}
+                  {% endif %}
+              </div>
+         </div>
+        {% endfor %}
+        {% for field in detail_form %}
+         <div class="form-group {% if field.errors %}has-error{% endif %}">
+            {% for error in field.errors %}
+                <label for="{{ field.id_for_label }}" class="control-label">{{ error }}</label>
+            {% endfor %}
+
+              <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label }}</label>
+              <div class ="col-sm-2">
+                  {% add_class field 'form-control' %}
+              </div>
+         </div>
+        {% endfor %}
+
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">保存</button>
+          <button type="reset" class="btn btn-primary">重置</button>
+        </div>
+
+    </form>
+{% endblock %}

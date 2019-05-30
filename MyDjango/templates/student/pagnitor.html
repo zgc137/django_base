@@ -1,0 +1,15 @@
+<ul class="pagination">
+    <li {% if page == 1 %}class="disabled"{% endif %}>
+      <a href="{% if page > 1 %}{{ request.path }}?page={{ page|add:'-1' }}&per_page={{ per_page }}{% endif %}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% for page_num in page_list %}
+     <li{% if page_num == page %} class = "active" {% endif %}><a href="{{ request.path }}?page={{ page_num }}&per_page={{ per_page }} ">{{ page_num }}</a></li>
+  {% endfor %}
+    <li {%  if page == total_page %}class="disabled"{% endif %}>
+      <a href="{% if page < total_page %}{{ request.path }}?page={{ page|add:'1' }}&per_page={{ per_page }}{% endif %}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+</ul>
